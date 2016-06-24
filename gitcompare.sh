@@ -6,7 +6,7 @@
 
 echo "Compare file between last N git commits."
 echo ""
-MAX=5
+MAX=7
 tmp_dir="tmp_gitcompare"
 
 which diffuse &> /dev/null
@@ -39,6 +39,10 @@ fi
 M=$((N-1))
 
 mkdir -p $tmp_dir
+DIR=$(dirname $FILE)
+if [ "$DIR" != "." ];then
+	mkdir -p "$tmp_dir/$DIR"
+fi 
 git show HEAD:$FILE > $tmp_dir/$FILE
 for i in $(seq 1 $M); do
 	git show HEAD~$i:$FILE > $tmp_dir/file$i
